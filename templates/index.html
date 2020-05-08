@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block body %}
+ <div class="row mt-4">
+    <div class="col-md-6">
+        <div class="container mt-3">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{users.username}}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{users.email}}</h6>
+                  <p class="card-text">{{users.description}}</p>
+                  <a href="#" class="card-link"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                  <a href="#" class="card-link"><i class="fab fa-github" aria-hidden="true"></i></a>
+                </div>
+            </div>      
+         </div>
+         <div class="container mt-3">
+            <button class="btn btn-outline-success" id="clickMe">What's on your mind?</button>
+            <div id="shownot">
+                <form  action="{% url 'index' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                    <label for="hastags">Write Hastags</label>
+                    <input type="text" class="form-control" id="hastags"  placeholder="Enter Hastags if any" name="hastag">
+                    </div>
+                    <div class="form-group">
+                    <label for="content">Content</label>
+                    <input type="text" class="form-control" id="content" placeholder="Write your Content" name="content">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="hidenot">Post</button>
+                </form>
+                <button  class="btn btn-danger mt-2" id="cancle">Cancle</button>
+            </div>
+         </div>
+    </div>
+    <div class="col-md-6">
+        <div class="container">
+            {% for post in posts %}
+            <div class="card m-2" style="width: 18rem;">
+               <div class="card-body">
+                 <h5 class="card-title">{{post.user.username}}</h5>
+                 <h6 class="card-subtitle mb-2 text-muted">{{post.title}}</h6>
+                 <p class="card-text">{{post.description}}</p>
+                 <hr>
+                 {{ post.liked.all.count }}
+                 <hr>
+                 <form action="{% url 'likes' post.id %}" method="POST">
+                   {% csrf_token %}
+                  {% if user in post.liked.all %}
+                  <button class="btn btn-danger" type="submit">Unlike</button>
+                  {% else %}
+                  <button class="btn btn-success" type="submit">Like</button>
+                  {% endif %}
+                 </form>
+                    {% if request.user == post.user %}
+                    <a href="{% url 'delete' post.id %}" class="card-link"><i class="fas fa-trash-alt"></i></a>
+                     <a href="#" data-toggle="modal" data-target="#exampleModal" class="ml-3">
+                        <i class="fas fa-pencil-alt"></i>
+                     </a>
+                     {% endif %}
+                    
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Edit Your Post</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <form  action="{% url 'edit' post.id %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                <label for="hastags">Hastags</label>
+                                <input type="text" class="form-control" id="hastags"  placeholder="Enter Hastags if any" name="hastag">
+                                </div>
+                                <div class="form-group">
+                                <label for="content">Content</label>
+                                <input type="text" class="form-control" id="content" placeholder="Write your Content" name="content">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+               </div>
+           </div>
+           {% endfor %}  
+        </div>
+    </div>
+ </div>
+ 
+{% endblock %}
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $("#shownot").hide();
+        $("#clickMe").click(function(){
+            $("#shownot").show();
+        });
+        $("#cancle").click(function(){
+            $("#shownot").hide();
+        });
+    });
+</script>
+{% endblock %}

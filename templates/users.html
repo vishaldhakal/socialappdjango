@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container m-3">
+        <div class="row">
+            {% for user in users %}
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">{{user.username}}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
+                      <p class="card-text">{{user.description}}</p>
+                      <a href="#" class="card-link"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                      <a href="#" class="card-link"><i class="fab fa-github" aria-hidden="true"></i></a>
+                    </div>
+                </div>   
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
