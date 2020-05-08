@@ -27,4 +27,9 @@ class  Like(models.Model):
     def __str__(self):
         return str(self.post)
 
+class messageModel(models.Model):
+    userfrom = models.ForeignKey(User,on_delete=models.CASCADE,related_name='userfrom')
+    userto = models.ForeignKey(User,on_delete=models.CASCADE,related_name='userto')
+    message = models.TextField()
+
 

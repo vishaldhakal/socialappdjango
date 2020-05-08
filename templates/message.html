@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header"><i class="fas fa-comment-dots mr-5"></i>{{to}}</h5>
+                <div class="card-body">
+                  {% for message in msg %}
+                  <h5 class="card-title">{{from}}</h5>
+                  <p class="card-text">{{message.message}}</p>
+                  {% endfor %}
+                  <form  action="{% url 'message' to.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                    <input type="text" class="form-control" id="message"  placeholder="Enter Your Message" name="message">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="hidenot">Send</button>
+                </form>
+                </div>
+              </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{% endblock %}

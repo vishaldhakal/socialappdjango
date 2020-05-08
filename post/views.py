@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
 from django.contrib.auth.models import User
-from .models import post,Like
+from .models import post,Like,messageModel
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 def index(request):
     id = request.user.id
@@ -60,3 +61,18 @@ def users(request):
     usersobj = User.objects.exclude(pk=id)
     context = {'users':usersobj}
     return render(request, 'users.html',context)
+
+def message(request,id):
+    fromUserid = request.user.id
+    fromUser = User.objects.get(id=fromUserid)
+    toUser = User.objects.get(id=id)
+    if request.method == "POST":
+        messagee = request.POST.get('message')
+        mesg = messageModel(message = messagee)
+        mesg.userfrom = fromUser
+        mesg.userto= toUser 
+        mesg.save()
+
+    mesgobj = messageModel.objects.filter((Q(userfrom=fromUser)&Q(userto=toUser))|(Q(userfrom=toUser)&Q(userto=fromUser)))
+    context = {'from':fromUser,'to':toUser,'msg':mesgobj}
+    return render(request,'message.html',context)
