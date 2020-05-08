@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container m-3">
+        <div class="row">
+            <div class="col-md-12 container">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title"><a href="#" class="card-link">{{user.username}}</a></h5>
+                      <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
+                      <p class="card-text">{{user.description}}</p>
+                      <a href="#" class="card-link"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                      <a href="{% url 'message' user.id %}" class="btn btn-outline-success ml-4">Message <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>   
+            </div>
+        </div>
+    </div>
+    <div class="container m-3">
+        <div class="row">
+            <div class="col-md-12 container">
+                <div class="card" style="width: 18rem;">
+                    {% for post in posts %}
+                    <div class="card-body">
+                      <h5 class="card-title"><a href="#" class="card-link">{{post.user.username}}</a></h5>
+                      <h6 class="card-subtitle mb-2 text-muted">{{post.title}}</h6>
+                      <p class="card-text">{{post.description}}</p>
+                    </div>
+                      {% endfor %}
+                </div>   
+            </div>
+        </div>
+    </div>
+{% endblock %}

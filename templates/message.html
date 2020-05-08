@@ -9,7 +9,7 @@
                 <h5 class="card-header"><i class="fas fa-comment-dots mr-5"></i>{{to}}</h5>
                 <div class="card-body">
                   {% for message in msg %}
-                  <h5 class="card-title">{{from}}</h5>
+                  <h5 class="card-title">{{message.userfrom}}</h5>
                   <p class="card-text">{{message.message}}</p>
                   {% endfor %}
                   <form  action="{% url 'message' to.id %}" method="POST">

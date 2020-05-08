@@ -14,7 +14,6 @@ def index(request):
         posttt = post(title = hastag,description=content)
         posttt.user = usersobj 
         posttt.save()
-        return render(request,'index.html',{'posts':postobj,'users':usersobj,'id':id})
 
     return render(request,'index.html',{'posts':postobj,'users':usersobj,'id':id})
 
@@ -28,11 +27,12 @@ def delete(request,id):
 @login_required
 def edit(request,id):
     postobj = post.objects.get(id=id)
-    if request.method == "POST" and request.user == postobj.user :
-        postob = post.objects.get(id=id)
+    if request.method == "POST":
+        postob = post.objects.filter(id=id)
         hastag = request.POST.get("hastag")
         content = request.POST.get("content")
         postob.update(title=hastag,description=content)
+
     return redirect('index')
 
 def liked(request,id):
@@ -73,6 +73,12 @@ def message(request,id):
         mesg.userto= toUser 
         mesg.save()
 
-    mesgobj = messageModel.objects.filter((Q(userfrom=fromUser)&Q(userto=toUser))|(Q(userfrom=toUser)&Q(userto=fromUser)))
+    mesgobj = messageModel.objects.filter((Q(userfrom=fromUser)&Q(userto=toUser))|(Q(userfrom=toUser)&Q(userto=fromUser))).order_by('senddate')
     context = {'from':fromUser,'to':toUser,'msg':mesgobj}
     return render(request,'message.html',context)
+
+def usersingle(request,id):
+    requser = User.objects.get(id=id)
+    postobj = post.objects.filter(user = requser)
+    context = {'user':requser,'posts':postobj}
+    return render(request,'usersingle.html',context)

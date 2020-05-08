@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 class post(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='author')
@@ -31,5 +32,6 @@ class messageModel(models.Model):
     userfrom = models.ForeignKey(User,on_delete=models.CASCADE,related_name='userfrom')
     userto = models.ForeignKey(User,on_delete=models.CASCADE,related_name='userto')
     message = models.TextField()
+    senddate = models.DateTimeField(auto_now_add=True)
 
 
