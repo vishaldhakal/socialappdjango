@@ -8,6 +8,8 @@ from accounts.models import friendRequest,Profile
 def index(request):
     id = request.user.id
     usersobj = User.objects.get(pk=id)
+    profileob = Profile.objects.filter(user=usersobj).first()
+    friendreqs = friendRequest.objects.filter(to=profileob)
     postobj = post.objects.all()
     if request.method == "POST":
         hastag = request.POST.get("hastag")
@@ -16,7 +18,7 @@ def index(request):
         posttt.user = usersobj 
         posttt.save()
 
-    return render(request,'index.html',{'posts':postobj,'users':usersobj,'id':id})
+    return render(request,'index.html',{'posts':postobj,'users':usersobj,'id':id,'friendreq':friendreqs})
 
 @login_required
 def delete(request,id): 

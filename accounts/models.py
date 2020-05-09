@@ -18,7 +18,7 @@ def create_profile(sender, instance, created, **kwargs):
 post_save.connect(create_profile,sender=User)
 
 def update_profile(sender, instance, created, **kwargs):
-    if created :
+    if created:
         instance.Profile.save()
 
 post_save.connect(update_profile,sender=User)
