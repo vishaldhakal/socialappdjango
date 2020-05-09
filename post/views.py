@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import post,Like,messageModel
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from accounts.models import friendRequest,Profile
 
 def index(request):
     id = request.user.id

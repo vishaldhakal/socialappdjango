@@ -10,7 +10,7 @@
                       <h5 class="card-title"><a href="{% url 'usersingle' user.id %}" class="card-link">{{user.username}}</a></h5>
                       <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
                       <p class="card-text">{{user.description}}</p>
-                      <a href="#" class="card-link"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                      <a href="{% url 'addfriendreq' user.id %}" class="card-link">Add friend</a>
                       <a href="{% url 'message' user.id %}" class="btn btn-outline-success ml-4">Message <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>   

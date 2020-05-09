@@ -1,7 +1,8 @@
 from django.shortcuts import render,HttpResponse,redirect
-from  django.contrib import auth
+from django.contrib import auth
 from django.contrib.auth.models import User
 from post.views import index
+from .models import Profile,friendRequest
 
 def register(request):
     if request.method == "POST":
@@ -44,3 +45,23 @@ def logout(request):
     usersobj = User.objects.get(pk=id)
     auth.logout(request)
     return redirect('register')
+
+def addfriendreq(request,id):
+    receiver = Profile.objects.get(pk=id)
+    sender = Profile.objects.get(id=request.user.id)
+    frend = friendRequest(frommm=sender,to=receiver)
+    frend.save()
+    context = {'rec':receiver,'sen':sender}
+    return redirect('users')
+
+def deletefriendreq(request,id):
+    receiver = Profile.objects.get(id=id)
+    sender = Profile.objects.get(user=request.user)
+    context = {'rec':receiver,'sen':sender}
+    return render(request,'registration/dashboard.html',context)
+
+def acceptfriendreq(request,id):
+    receiver = Profile.objects.get(id=id)
+    sender = Profile.objects.get(user=request.user)
+    context = {'rec':receiver,'sen':sender}
+    return render(request,'registration/dashboard.html',context)
