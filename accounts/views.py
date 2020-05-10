@@ -61,7 +61,12 @@ def deletefriendreq(request,id):
     return render(request,'registration/dashboard.html',context)
 
 def acceptfriendreq(request,id):
-    receiver = Profile.objects.get(id=id)
-    sender = Profile.objects.get(user=request.user)
-    context = {'rec':receiver,'sen':sender}
-    return render(request,'registration/dashboard.html',context)
+    receiver = Profile.objects.get(pk=id)
+    sender = Profile.objects.get(id=request.user.id)
+    receiver.friends.add(sender)
+    sender.friends.add(receiver)
+    receiver.save()
+    sender.save()
+    fre = friendRequest.objects.get(frommm=receiver,to=sender)
+    fre.delete()
+    return redirect('users')

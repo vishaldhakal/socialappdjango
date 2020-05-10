@@ -8,8 +8,7 @@ from accounts.models import friendRequest,Profile
 def index(request):
     id = request.user.id
     usersobj = User.objects.get(pk=id)
-    profileob = Profile.objects.filter(user=usersobj).first()
-    friendreqs = friendRequest.objects.filter(to=profileob)
+    profileob = Profile.objects.get(id=id)
     postobj = post.objects.all()
     if request.method == "POST":
         hastag = request.POST.get("hastag")
@@ -18,7 +17,7 @@ def index(request):
         posttt.user = usersobj 
         posttt.save()
 
-    return render(request,'index.html',{'posts':postobj,'users':usersobj,'id':id,'friendreq':friendreqs})
+    return render(request,'index.html',{'posts':postobj,'users':usersobj,'id':id})
 
 @login_required
 def delete(request,id): 
@@ -61,8 +60,12 @@ def liked(request,id):
 
 def users(request):
     id = request.user.id
-    usersobj = User.objects.exclude(pk=id)
-    context = {'users':usersobj}
+    tyouser = User.objects.get(id=id)
+    tyouserprof = Profile.objects.get(user=tyouser)
+    friendss = Profile.objects.filter(friends=tyouserprof)
+    usersobj = Profile.objects.exclude(id=id)
+    friendreqs = friendRequest.objects.filter(to=tyouserprof)
+    context = {'users':usersobj,'tyouser':friendss,'friendreq':friendreqs}
     return render(request, 'users.html',context)
 
 def message(request,id):

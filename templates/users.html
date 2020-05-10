@@ -3,18 +3,45 @@
 {% block body %}
     <div class="container m-3">
         <div class="row">
+            
             {% for user in users %}
-            <div class="col-md-4">
+            <div class="col-md-4 mb-3">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                      <h5 class="card-title"><a href="{% url 'usersingle' user.id %}" class="card-link">{{user.username}}</a></h5>
-                      <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
-                      <p class="card-text">{{user.description}}</p>
-                      <a href="{% url 'addfriendreq' user.id %}" class="card-link">Add friend</a>
+                      <h5 class="card-title"><a href="{% url 'usersingle' user.id %}" class="card-link">{{user.user.username}}</a></h5>
+                      <h6 class="card-subtitle mb-2 text-muted">{{user.user.email}}</h6>
+                      <p class="card-text">{{user.user.description}}</p>
+                      <a href="{% url 'addfriendreq' user.id %}" class="btn btn-outline-danger">Add friend</a>
                       <a href="{% url 'message' user.id %}" class="btn btn-outline-success ml-4">Message <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>   
             </div>
+            {% endfor %}
+            <div class="container my-4">
+                Friend Request
+            </div>
+            {% for req in friendreq %}
+            <div class="row container mt-4">
+            <div class="col-sm-6">
+                <a href="#" class="btn btn-outline-success">{{req.frommm.user}}</a>
+                <a href="{% url 'acceptfriendreq' req.frommm.user.id %}" class="btn btn-outline-success">Accept</a>
+            </div>
+            </div>
+            {% endfor %}
+            <div class="container my-4">
+                Friends List
+            </div>
+            {% for user in tyouser %}
+                <div class="col-md-4 mb-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'usersingle' user.id %}" class="card-link">{{user.user.username}}</a></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{user.user.email}}</h6>
+                        <p class="card-text">{{user.user.description}}</p>
+                        <a href="{% url 'message' user.id %}" class="btn btn-outline-success ml-4">Message <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>   
+                </div>
             {% endfor %}
         </div>
     </div>
