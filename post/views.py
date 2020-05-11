@@ -67,8 +67,8 @@ def users(request):
     friendse = Profile.objects.filter(friends=tyouserprof)
     usersobj = Profile.objects.exclude(id=id)
     friendreqs = friendRequest.objects.filter(to=tyouserprof)
-    colegues = usersobj.exclude(friends__in=friendss)
-    context = {'users':colegues,'tyouser':friendse,'friendreq':friendreqs}
+    notfriends = usersobj.exclude(friends__in=friendss)
+    context = {'users':notfriends,'tyouser':friendse,'friendreq':friendreqs}
     return render(request, 'users.html',context)
 
 def message(request,id):
