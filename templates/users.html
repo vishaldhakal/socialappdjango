@@ -8,11 +8,11 @@
             <div class="col-md-4 mb-3">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                      <h5 class="card-title"><a href="{% url 'usersingle' user.id %}" class="card-link">{{user.user.username}}</a></h5>
+                      <h5 class="card-title"><a href="{% url 'usersingle' user.user.id %}" class="card-link">{{user.user.username}}</a></h5>
                       <h6 class="card-subtitle mb-2 text-muted">{{user.user.email}}</h6>
                       <p class="card-text">{{user.user.description}}</p>
-                      <a href="{% url 'addfriendreq' user.id %}" class="btn btn-outline-danger">Add friend</a>
-                      <a href="{% url 'message' user.id %}" class="btn btn-outline-success ml-4">Message <i class="fas fa-arrow-right"></i></a>
+                      <a href="{% url 'addfriendreq' user.user.id %}" class="btn btn-outline-danger">Add friend</a>
+                      <a href="{% url 'message' user.user.id %}" class="btn btn-outline-success ml-4">Message <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>   
             </div>
@@ -35,10 +35,10 @@
                 <div class="col-md-4 mb-3">
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
-                        <h5 class="card-title"><a href="{% url 'usersingle' user.id %}" class="card-link">{{user.user.username}}</a></h5>
+                        <h5 class="card-title"><a href="#" class="card-link">{{user.user.username}}</a></h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{user.user.email}}</h6>
                         <p class="card-text">{{user.user.description}}</p>
-                        <a href="{% url 'message' user.id %}" class="btn btn-outline-success ml-4">Message <i class="fas fa-arrow-right"></i></a>
+                        <a href="{% url 'message' user.user.id %}" class="btn btn-outline-success ml-4">Message <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>   
                 </div>

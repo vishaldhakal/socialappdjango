@@ -4,6 +4,7 @@ from .models import post,Like,messageModel
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from accounts.models import friendRequest,Profile
+from django.forms.models import model_to_dict
 
 def index(request):
     id = request.user.id
@@ -62,10 +63,12 @@ def users(request):
     id = request.user.id
     tyouser = User.objects.get(id=id)
     tyouserprof = Profile.objects.get(user=tyouser)
-    friendss = Profile.objects.filter(friends=tyouserprof)
+    friendss = Profile.objects.values_list('friend',flat=True)
+    friendse = Profile.objects.filter(friends=tyouserprof)
     usersobj = Profile.objects.exclude(id=id)
     friendreqs = friendRequest.objects.filter(to=tyouserprof)
-    context = {'users':usersobj,'tyouser':friendss,'friendreq':friendreqs}
+    colegues = usersobj.exclude(friends__in=friendss)
+    context = {'users':colegues,'tyouser':friendse,'friendreq':friendreqs}
     return render(request, 'users.html',context)
 
 def message(request,id):
