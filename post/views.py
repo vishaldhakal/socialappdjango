@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from accounts.models import friendRequest,Profile
 from django.forms.models import model_to_dict
+from django.db.models import F
 
 def index(request):
     id = request.user.id
@@ -64,11 +65,12 @@ def users(request):
     tyouser = User.objects.get(id=id)
     tyouserprof = Profile.objects.get(user=tyouser)
     friendss = Profile.objects.values_list('friend',flat=True)
-    friendse = Profile.objects.filter(friends=tyouserprof)
+    friendse = tyouserprof.friends.all()
     usersobj = Profile.objects.exclude(id=id)
     friendreqs = friendRequest.objects.filter(to=tyouserprof)
-    notfriends = usersobj.exclude(friends__in=friendss)
-    context = {'users':notfriends,'tyouser':friendse,'friendreq':friendreqs}
+    notfriends = usersobj.exclude(friends__in=friendse)
+    abcd = notfriends.exclude(friends=tyouserprof)
+    context = {'users':abcd,'tyouser':friendse,'friendreq':friendreqs}
     return render(request, 'users.html',context)
 
 def message(request,id):
