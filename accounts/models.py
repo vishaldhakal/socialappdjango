@@ -10,6 +10,14 @@ class Profile(models.Model):
     friends = models.ManyToManyField("Profile",blank=True,related_name='friend')
     slug = models.SlugField()
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='usser')
+    cover_photo = models.ImageField(blank=True)
+    profile_photo = models.ImageField(blank=True)
+    profession = models.CharField(max_length=400,blank=True)
+    temporary_address = models.CharField(max_length=400,blank=True)
+    permanent_address = models.CharField(max_length=400,blank=True)
+    contact_no = models.CharField(max_length=400,blank=True)
+    bio = models.TextField(blank=True)
+
 
 
 class friendRequest(models.Model):

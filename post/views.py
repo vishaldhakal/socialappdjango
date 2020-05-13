@@ -6,6 +6,8 @@ from django.db.models import Q
 from accounts.models import friendRequest,Profile
 from django.forms.models import model_to_dict
 from django.db.models import F
+from django.http import JsonResponse
+import json
 
 def index(request):
     id = request.user.id
@@ -90,6 +92,27 @@ def message(request,id):
 
 def usersingle(request,id):
     requser = User.objects.get(id=id)
+    repro = Profile.objects.get(user=requser)
     postobj = post.objects.filter(user = requser)
-    context = {'user':requser,'posts':postobj}
-    return render(request,'usersingle.html',context)
+    context = {'user':repro,'posts':postobj}
+    return render(request,'abc.html',context)
+
+def crud_ajax_create(request):
+    hastag = request.GET['hastag']
+    content = request.GET['content']
+    user = request.user
+    us = post(user=user,title=hastag,description=content)
+    us.save()
+    likecount = us.liked.all().count();
+    username = user.username
+    idd = us.id
+    l = list()
+    data = {
+        'hastag': hastag,
+        'content': content,
+        'like':likecount,
+        'user':username,
+        'id':idd
+    }
+    l.append(data)
+    return HttpResponse(json.dumps(l))

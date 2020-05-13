@@ -9,4 +9,5 @@ urlpatterns = [
     path('edit/<id>/',views.edit,name = 'edit'),
     path('delete/<id>/',views.delete,name = 'delete'),
     path('liked/<id>/',views.liked,name = 'likes'),
+    path('crud_ajax/', views.crud_ajax_create,name='crud_ajax_create'),
 ]
