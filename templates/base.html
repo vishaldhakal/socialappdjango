@@ -10,11 +10,17 @@
     <link href="{% static 'style.css' %}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      body{
+        background-color: rgb(255, 255, 255);
+      }
+    </style>
     {% block css %}
     {% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <a class="navbar-brand" href="{% url 'index' %}">Innovative</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -22,6 +28,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+            {% if request.user.is_authenticated %}
             <li class="nav-item active">
               <a class="nav-link" href="{% url 'index' %}">My Profile<span class="sr-only"></span></a>
             </li>
@@ -33,16 +40,12 @@
             </li>
           </ul>
           <ul class="navbar-nav mr-auto float-right">
-            {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">Logout<span class="sr-only"></span></a>
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="#">Login<span class="sr-only"></span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Register</a>
+              <a class="nav-link" href="{% url 'register' %}">Register</a>
             </li>
             {% endif %}
           </ul>

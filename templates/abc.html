@@ -1,58 +1,180 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block body %}
-<div class="container main-secction">
-    <div class="row mx-auto">
-        <div class="col-md-12 col-sm-12 col-xs-12 image-section">
-            <img src="{{user.cover_photo.url}}" width="100%" height="400px" class="p-3" >
-        </div>
-        <div class="row user-left-part container">
-            <div class="col-md-3 col-sm-3 col-xs-12 user-profil-part pull-left">
-                <div class="row ">
-                    <div class="col-md-12 col-md-12-sm-12 col-xs-12 user-image text-center">
-                        <img src="{{user.profile_photo.url}}"
-                            class="rounded-circle" height="100%" width="50%">
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 user-detail-section1 text-center mt-3 ml-2">
-                        <a href="#" class="btn btn-outline-danger">Add friend</a>
-                        <a href="#" class="btn btn-outline-success">Message <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="row user-detail-row">
-                    </div>
+{% block css %}
+<style>
+    .mycont {
+        border: 2px solid rgb(163, 0, 0);
+        border-radius: 20px;
+        padding: 4px;
+    }
 
+    .twPc-div {
+        background: #fff none repeat scroll 0 0;
+        border: 1px solid #e1e8ed;
+        border-radius: 6px;
+        width: 100%;
+    }
+
+    .twPc-bg {
+        background-image: url("{% if user.cover_photo %}{{user.cover_photo.url}}{% else %}{% static 'image/feature-slide-1.jpg' %}{% endif %}");
+        background-position: 0 50%;
+        background-size: 100% auto;
+        border-bottom: 1px solid #e1e8ed;
+        border-radius: 4px 4px 0 0;
+        height: 300px;
+        width: 100%;
+    }
+
+    .twPc-block {
+        display: block !important;
+    }
+
+    .twPc-button {
+        margin: -35px -10px 0;
+        text-align: right;
+        width: 100%;
+    }
+    .twPc-button2 {
+        margin: -20px -20px 0;
+        text-align: right;
+        width: 100%;
+    }
+
+    .twPc-avatarLink {
+        background-color: #fff;
+        border-radius: 6px;
+        display: inline-block !important;
+        margin: -30px 5px 0 8px;
+        max-width: 100%;
+        padding: 1px;
+        vertical-align: bottom;
+    }
+
+    .twPc-avatarImg {
+        border: 2px solid #fff;
+        border-radius: 7px;
+        box-sizing: border-box;
+        color: #fff;
+        height: 72px;
+        width: 72px;
+    }
+
+    .twPc-divUser {
+        margin: 5px 0 0;
+    }
+
+    .twPc-divName {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 21px;
+    }
+
+    .twPc-divName a {
+        color: inherit !important;
+    }
+
+    .twPc-divStats {
+        margin-left: 11px;
+        padding: 10px 0;
+    }
+
+    .twPc-Arrange {
+        box-sizing: border-box;
+        display: table;
+        margin: 0;
+        min-width: 100%;
+        padding: 0;
+        table-layout: auto;
+    }
+
+    ul.twPc-Arrange {
+        list-style: outside none none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .twPc-ArrangeSizeFit {
+        display: table-cell;
+        padding: 0;
+        vertical-align: top;
+    }
+
+    .twPc-ArrangeSizeFit a:hover {
+        text-decoration: none;
+    }
+
+    .twPc-StatValue {
+        display: block;
+        font-size: 18px;
+        font-weight: 500;
+        transition: color 0.15s ease-in-out 0s;
+    }
+
+    .twPc-StatLabel {
+        color: #8899a6;
+        font-size: 10px;
+        letter-spacing: 0.02em;
+        overflow: hidden;
+        text-transform: uppercase;
+        transition: color 0.15s ease-in-out 0s;
+    }
+</style>
+{% endblock %}
+{% block body %}
+
+<div class="container main-secction mt-4">
+    <div class="row mx-auto">
+        <div class="twPc-div">
+            <a class="twPc-bg twPc-block"></a>
+
+            <div>
+                <div class="twPc-button">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
                 </div>
-            </div>
-            <div class="col-md-3"></div>
-            <div class="col-md-6 col-sm-9 col-xs-12 pull-right profile-right-section pt-4">
-                <div class="row profile-right-section-row">
-                    <div class="col-md-12 profile-header">
-                        <div class="row">
-                            <div class="col-md-8 col-sm-6 col-xs-6 profile-header-section1 pull-left">
-                                <h1>{{user.user.username}}</h1>
-                                <h5>{{user.profession}}</h5>
-                            </div>
+
+                <a title="Mert S. Kaplan" href="https://twitter.com/mertskaplan" class="twPc-avatarLink">
+                    <img alt="Mert S. Kaplan"
+                        src="{% if user.profile_photo %}{{user.profile_photo.url}}{% else %}{% static 'image/feature-slide-2.jpg' %}{% endif %}"
+                        class="twPc-avatarImg">
+                        <div class="twPc-button2">
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
                         </div>
+                </a>
+
+                <div class="twPc-divUser p-2">
+                    <div class="twPc-divName">
+                        <a href="https://twitter.com/mertskaplan">{{user.user.username}}</a>
                     </div>
-                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                          <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+                    <span>
+                        <a href="https://twitter.com/mertskaplan">@<span>mertskaplan</span></a>
+                    </span>
+                </div>
+
+                <div class="twPc-divStats">
+                    <ul class="twPc-Arrange">
+                        <li class="twPc-ArrangeSizeFit">
+                            <a href="https://twitter.com/mertskaplan" title="9.840 Tweet">
+                                <span class="twPc-StatLabel twPc-block">Tweets</span>
+                                <span class="twPc-StatValue">9.840</span>
+                            </a>
                         </li>
-                        <li class="nav-item">
-                          <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+                        <li class="twPc-ArrangeSizeFit">
+                            <a href="https://twitter.com/mertskaplan/following" title="885 Following">
+                                <span class="twPc-StatLabel twPc-block">Following</span>
+                                <span class="twPc-StatValue">885</span>
+                            </a>
                         </li>
-                        <li class="nav-item">
-                          <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+                        <li class="twPc-ArrangeSizeFit">
+                            <a href="https://twitter.com/mertskaplan/followers" title="1.810 Followers">
+                                <span class="twPc-StatLabel twPc-block">Followers</span>
+                                <span class="twPc-StatValue">1.810</span>
+                            </a>
                         </li>
-                      </ul>
-                      <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                            <div>
-                                <h1>{{user.bio}}</h1>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"></div>
-                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"></div>
-                      </div>
+                    </ul>
                 </div>
             </div>
         </div>

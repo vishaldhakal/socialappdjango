@@ -21,7 +21,7 @@ def index(request):
         posttt.user = usersobj 
         posttt.save()
 
-    return render(request,'index.html',{'posts':postobj,'users':usersobj,'id':id})
+    return render(request,'index.html',{'posts':postobj,'users':profileob,'id':id})
 
 @login_required
 def delete(request,id): 

@@ -8,10 +8,9 @@ from django.db.models import manager
 
 class Profile(models.Model):
     friends = models.ManyToManyField("Profile",blank=True,related_name='friend')
-    slug = models.SlugField()
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='usser')
-    cover_photo = models.ImageField(blank=True)
-    profile_photo = models.ImageField(blank=True)
+    cover_photo = models.ImageField(blank=True,null=True)
+    profile_photo = models.ImageField(blank=True,null=True)
     profession = models.CharField(max_length=400,blank=True)
     temporary_address = models.CharField(max_length=400,blank=True)
     permanent_address = models.CharField(max_length=400,blank=True)

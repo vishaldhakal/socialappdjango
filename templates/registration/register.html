@@ -1,36 +1,106 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block css %}
+<style>
+     body{
+        background-color: rgb(49, 49, 49);
+    }
+    .remove{
+        display: none;
+    }
+    .mycon{
+        border: 2px solid rgb(163, 0, 0);
+        border-radius: 20px;
+    }
+</style>
+{% endblock %}
 {% block body %}
-    <div class="row">
-        <div class="container col-md-5 mt-2">
-            <h1> <i class="fa fa-user" aria-hidden="true"></i> Register Here</h1>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <img src="{% static 'image/a.svg' %}" class="img-fluid p-5">
+            <div class="p-5 ml-2">
+                <h3 class="text-light">
+                    Connect With lakhs of <br><span class="text-primary"> People All around the world !</span>
+                </h3>
+            </div>
+        </div>
+        <div class="col-md-6 container a">
+            <div class="row">
+                <div class="col-md-8 mt-2 ml-3">
+                    <h1 class="text-light"> <i class="fa fa-user" aria-hidden="true"></i> Register Here</h1>
+                </div>
+            </div>
+            <form  class="col-md-8 mt-3  mycon p-4" action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="first_name" class="text-light">First Name:</label>
+                    <input class="form-control" type="text" name="first_name" placeholder="First Name">
+                </div>
+                <div class="form-group">
+                    <label for="last_name" class="text-light">Last Name:</label>
+                    <input class="form-control" type="text" name="last_name" placeholder="Last Name">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="text-light">Email:</label>
+                    <input class="form-control" type="email" name="email" placeholder="Email address">
+                </div>
+                <div class="form-group">
+                    <label for="username" class="text-light">Username:</label>
+                    <input class="form-control" type="text" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="text-light">Password:</label>
+                    <input class="form-control" type="password" name="password" placeholder="Password">
+                </div>
+                <input class="btn btn-outline-danger btn-block" type="submit" value="Register">
+            </form>
+            <div class="container col-md-12 mt-3">
+                <span class="text-light">Already Have a account ? </span>
+                 <a href="#" class="login">Log In</a>
+            </div>
+        </div>
+        <div class="container col-md-6 b">
+            <div class="container col-md-8 mt-2 ml-3">
+                <h1 class="text-light"><i class="fa fa-user" aria-hidden="true"></i>Login</h1>
+            </div>
+            <form class="col-md-8 mt-3 mycon p-3" action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username" class="text-light">Username:</label>
+                    <input class="form-control" type="text" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="text-light">Password:</label>
+                    <input class="form-control" type="password" name="password">
+                </div>
+                <input class="btn btn-outline-danger" type="submit" value="Login">
+            </form>
+            <div class="container col-md-12 mt-3">
+                <span class="text-light">Don't Have a account ? </span>
+                 <a href="#" class="register">Register</a>
+            </div>
         </div>
     </div>
-    <form  class="container col-md-5 mt-3" action="{% url 'register' %}" method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="first_name">First Name:</label>
-            <input class="form-control" type="text" name="first_name">
-        </div>
-        <div class="form-group">
-            <label for="last_name">Last Name:</label>
-            <input class="form-control" type="text" name="last_name">
-        </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input class="form-control" type="email" name="email">
-        </div>
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input class="form-control" type="text" name="username">
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input class="form-control" type="password" name="password">
-        </div>
-        <input class="btn btn-outline-danger" type="submit" value="Register">
-    </form>
-    <div class="container col-md-5 mt-3">
-         <a href="{% url 'login' %}" class="btn btn-outline-danger">Log In</a>
-    </div>
+{% endblock %}
+{% block js %}
+<script>
+    const log = document.querySelector('.login');
+    const reg = document.querySelector('.register');
+    const cont1 = document.querySelector('.a');
+    const cont2 = document.querySelector('.b');
+    cont2.classList.add('remove');
+    log.addEventListener('click',tog1);
+    function tog1(e){
+        e.preventDefault();
+        cont2.classList.remove('remove')
+        cont1.classList.add('remove')
+    }
+    reg.addEventListener('click',tog2);
+    function tog2(e){
+        e.preventDefault();
+        cont1.classList.remove('remove')
+        cont2.classList.add('remove')
+    }
+    
+</script>
 {% endblock %}

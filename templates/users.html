@@ -1,22 +1,55 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block css %}
+    <style>
+        .tables{
+            background-color: rgb(255, 255, 255);
+            border-radius: 15px;
+            border: 2px solid rgb(116, 0, 0);
+        }
+        .opac{
+            opacity: 0.8;
+        }
+        .lk{
+            text-decoration: none !important;
+        }
+    </style>
+{% endblock %}
 {% block body %}
     <div class="container m-3">
         <div class="row">
-            
-            {% for user in users %}
-            <div class="col-md-4 mb-3">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title"><a href="{% url 'usersingle' user.user.id %}" class="card-link">{{user.user.username}}</a></h5>
-                      <h6 class="card-subtitle mb-2 text-muted">{{user.user.email}}</h6>
-                      <p class="card-text">{{user.user.description}}</p>
-                      <a href="{% url 'addfriendreq' user.user.id %}" class="btn btn-outline-danger">Add friend</a>
-                      <a href="{% url 'message' user.user.id %}" class="btn btn-outline-success ml-4">Message <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>   
+            <div class="col-md-5 tables">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Users</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                      <tr>
+                        <td>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <a href="{% url 'usersingle' user.id %}">
+                                        <img src="{% if user.profile_photo %}{{user.profile_photo.url}}{% else %}{% static 'image/feature-slide-2.jpg' %}{% endif %}" class="rounded-circle" height="100px" width="100px">
+                                    </a>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p>
+                                        <strong><b><a href="{% url 'usersingle' user.id %}" class="lk">{{user.user.first_name}}&nbsp;&nbsp;{{user.user.last_name}}</a></b></strong>
+                                    </p>
+                                    <p class="opac">
+                                        {{user.bio}} 
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
             </div>
-            {% endfor %}
             <div class="container my-4">
                 Friend Request
             </div>
